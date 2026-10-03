@@ -3,3 +3,8 @@ tmp/
 .codex-build-decorator/
 .codex-finalizer/
 output/
+
+# Arquivos gerados pela IDE e pelo Maven
+**/.idea/
+**/target/
+**/.mvn-repository/
