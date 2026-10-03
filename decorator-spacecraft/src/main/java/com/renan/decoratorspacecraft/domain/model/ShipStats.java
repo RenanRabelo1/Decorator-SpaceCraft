@@ -1,4 +1,10 @@
 package com.renan.decoratorspacecraft.domain.model;
 
-public class ShipStats {
+public record ShipStats(
+        String name,
+        int health,
+        int attack,
+        int defense,
+        int speed
+) {
 }
