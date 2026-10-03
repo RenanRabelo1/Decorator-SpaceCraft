@@ -13,6 +13,11 @@ public class BasicSpacecraft implements Spacecraft {
     );
 
     @Override
+    public String getDescription() {
+        return DEFAULT_STATS.name();
+    }
+
+    @Override
     public ShipStats getStats() {
         return DEFAULT_STATS;
     }

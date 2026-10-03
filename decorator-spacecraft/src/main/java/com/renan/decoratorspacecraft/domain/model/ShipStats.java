@@ -7,4 +7,12 @@ public record ShipStats(
         int defense,
         int speed
 ) {
+
+    public ShipStats withAttack(int newAttack) {
+        return new ShipStats(name, health, newAttack, defense, speed);
+    }
+
+    public ShipStats withSpeed(int newSpeed) {
+        return new ShipStats(name, health, attack, defense, newSpeed);
+    }
 }

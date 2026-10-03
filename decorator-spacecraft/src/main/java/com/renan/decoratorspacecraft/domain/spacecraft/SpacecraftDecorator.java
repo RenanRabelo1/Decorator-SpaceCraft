@@ -12,6 +12,11 @@ public abstract class SpacecraftDecorator implements Spacecraft {
     }
 
     @Override
+    public String getDescription() {
+        return spacecraft.getDescription();
+    }
+
+    @Override
     public ShipStats getStats() {
         return spacecraft.getStats();
     }
