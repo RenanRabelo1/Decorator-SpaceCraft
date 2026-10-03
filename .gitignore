@@ -1,0 +1,5 @@
+# Arquivos temporarios gerados durante a preparacao do seminario
+tmp/
+.codex-build-decorator/
+.codex-finalizer/
+output/
