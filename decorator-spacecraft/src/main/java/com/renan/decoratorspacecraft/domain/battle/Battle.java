@@ -9,12 +9,14 @@ public class Battle {
     private final EnemyShip enemy;
     private int playerHealth;
     private int enemyHealth;
+    private boolean missileAvailable;
 
     public Battle(Spacecraft player, EnemyShip enemy) {
         this.player = Objects.requireNonNull(player);
         this.enemy = Objects.requireNonNull(enemy);
         this.playerHealth = player.getStats().health();
         this.enemyHealth = enemy.getStats().health();
+        this.missileAvailable = player.hasMissile();
     }
 
     public int playerAttack() {
@@ -29,12 +31,36 @@ public class Battle {
         return damage;
     }
 
+    public int playerUseMissile() {
+        if (!missileAvailable) {
+            throw new IllegalStateException("Míssil indisponível.");
+        }
+
+        missileAvailable = false;
+        int damage = player.getMissileDamage();
+        enemyHealth = Math.max(0, enemyHealth - damage);
+        return damage;
+    }
+
+    public int repairPlayer() {
+        int previousHealth = playerHealth;
+        playerHealth = Math.min(
+                player.getStats().health(),
+                playerHealth + player.getRepairAmount()
+        );
+        return playerHealth - previousHealth;
+    }
+
     public int getPlayerHealth() {
         return playerHealth;
     }
 
     public int getEnemyHealth() {
         return enemyHealth;
+    }
+
+    public boolean isMissileAvailable() {
+        return missileAvailable;
     }
 
     public BattleResult getResult() {
