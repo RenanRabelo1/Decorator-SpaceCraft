@@ -1,4 +1,7 @@
 package com.renan.decoratorspacecraft.domain.battle;
 
-public class BattleResult {
+public enum BattleResult {
+    IN_PROGRESS,
+    PLAYER_VICTORY,
+    ENEMY_VICTORY
 }
