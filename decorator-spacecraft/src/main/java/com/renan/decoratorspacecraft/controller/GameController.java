@@ -4,6 +4,7 @@ import com.renan.decoratorspacecraft.domain.battle.Battle;
 import com.renan.decoratorspacecraft.domain.battle.BattleResult;
 import com.renan.decoratorspacecraft.domain.battle.EnemyShip;
 import com.renan.decoratorspacecraft.domain.spacecraft.Spacecraft;
+import com.renan.decoratorspacecraft.exception.InvalidOptionException;
 import com.renan.decoratorspacecraft.factory.SpacecraftFactory;
 import com.renan.decoratorspacecraft.service.BattleService;
 import com.renan.decoratorspacecraft.service.UpgradeService;
@@ -49,7 +50,10 @@ public class GameController {
 
         while (running) {
             renderer.showMainMenu();
-            int option = menu.readOption();
+            Integer option = readOption();
+            if (option == null) {
+                continue;
+            }
 
             switch (option) {
                 case 1 -> startMission();
@@ -68,7 +72,10 @@ public class GameController {
 
         while (preparing) {
             renderer.showUpgradeMenu(spacecraft);
-            int option = menu.readOption();
+            Integer option = readOption();
+            if (option == null) {
+                continue;
+            }
 
             switch (option) {
                 case 1 -> spacecraft = upgradeService.applyUpgrade(spacecraft, "TURBO");
@@ -92,7 +99,10 @@ public class GameController {
         while (battle.getResult() == BattleResult.IN_PROGRESS) {
             renderer.showBattleStatus(battle, spacecraft);
             renderer.showBattleMenu(battle.isMissileAvailable());
-            int option = menu.readOption();
+            Integer option = readOption();
+            if (option == null) {
+                continue;
+            }
 
             if (option == 0) {
                 renderer.showMessage("Missão abandonada.");
@@ -120,6 +130,15 @@ public class GameController {
             renderer.showMessage("Vitória! A Destroyer X foi derrotada.");
         } else {
             renderer.showMessage("Derrota! Sua nave foi destruída.");
+        }
+    }
+
+    private Integer readOption() {
+        try {
+            return menu.readOption();
+        } catch (InvalidOptionException exception) {
+            renderer.showMessage(exception.getMessage());
+            return null;
         }
     }
 }

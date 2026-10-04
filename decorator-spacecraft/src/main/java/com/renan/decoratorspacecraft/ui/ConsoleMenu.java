@@ -1,5 +1,6 @@
 package com.renan.decoratorspacecraft.ui;
 
+import com.renan.decoratorspacecraft.exception.InvalidOptionException;
 import java.util.Scanner;
 
 public class ConsoleMenu {
@@ -11,6 +12,14 @@ public class ConsoleMenu {
     }
 
     public int readOption() {
-        return Integer.parseInt(scanner.nextLine().trim());
+        if (!scanner.hasNextLine()) {
+            throw new InvalidOptionException();
+        }
+
+        try {
+            return Integer.parseInt(scanner.nextLine().trim());
+        } catch (NumberFormatException exception) {
+            throw new InvalidOptionException();
+        }
     }
 }
