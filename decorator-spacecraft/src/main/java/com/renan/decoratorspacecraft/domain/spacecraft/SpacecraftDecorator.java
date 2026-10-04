@@ -20,4 +20,19 @@ public abstract class SpacecraftDecorator implements Spacecraft {
     public ShipStats getStats() {
         return spacecraft.getStats();
     }
+
+    @Override
+    public boolean hasMissile() {
+        return spacecraft.hasMissile();
+    }
+
+    @Override
+    public int getMissileDamage() {
+        return spacecraft.getMissileDamage();
+    }
+
+    @Override
+    public int getRepairAmount() {
+        return spacecraft.getRepairAmount();
+    }
 }
