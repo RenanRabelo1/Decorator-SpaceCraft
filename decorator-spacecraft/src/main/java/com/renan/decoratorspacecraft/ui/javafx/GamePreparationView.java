@@ -17,6 +17,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public class GamePreparationView {
 
@@ -30,6 +32,7 @@ public class GamePreparationView {
 
     private final SpacecraftFactory spacecraftFactory;
     private final UpgradeService upgradeService;
+    private final Consumer<Spacecraft> onStartBattle;
     private Spacecraft spacecraft;
 
     private Label descriptionLabel;
@@ -39,9 +42,14 @@ public class GamePreparationView {
     private Label speedValue;
     private Label statusLabel;
 
-    public GamePreparationView(SpacecraftFactory spacecraftFactory, UpgradeService upgradeService) {
-        this.spacecraftFactory = spacecraftFactory;
-        this.upgradeService = upgradeService;
+    public GamePreparationView(
+            SpacecraftFactory spacecraftFactory,
+            UpgradeService upgradeService,
+            Consumer<Spacecraft> onStartBattle
+    ) {
+        this.spacecraftFactory = Objects.requireNonNull(spacecraftFactory);
+        this.upgradeService = Objects.requireNonNull(upgradeService);
+        this.onStartBattle = Objects.requireNonNull(onStartBattle);
         this.spacecraft = spacecraftFactory.createBasicSpacecraft();
     }
 
@@ -148,9 +156,7 @@ public class GamePreparationView {
 
         Button startBattle = new Button("INICIAR BATALHA  →");
         startBattle.setStyle(PRIMARY_BUTTON + "-fx-padding: 13 24 13 24;");
-        startBattle.setOnAction(event -> statusLabel.setText(
-                "Preparação concluída! A tela visual de batalha será a próxima etapa."
-        ));
+        startBattle.setOnAction(event -> onStartBattle.accept(spacecraft));
 
         HBox footerContent = new HBox(16, statusLabel, spacer, startBattle);
         footerContent.setAlignment(Pos.CENTER_LEFT);
